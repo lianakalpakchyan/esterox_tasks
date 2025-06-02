@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
+import {BACK_BASE_URL} from "./envKeys.jsx";
 
 const CoursesContext = createContext();
 
@@ -7,7 +8,7 @@ const CoursesProvider = ({ children }) => {
 
     useEffect(() => {
         setCoursesState({ loading: true, courses: null });
-        const apiUrl = 'http://localhost:8000/courses/';
+        const apiUrl = `${BACK_BASE_URL}courses/`;
         fetch(apiUrl)
             .then(res => res.json())
             .then(courses => {

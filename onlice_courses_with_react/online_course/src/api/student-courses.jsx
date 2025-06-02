@@ -1,15 +1,16 @@
+import {BACK_BASE_URL} from "./envKeys.jsx";
+
 const handleFetchStudentCourses = async (pageNumber, pageSize) => {
     const page = pageSize ? `&page_size=${pageSize}` : ''
     const pagination = pageNumber == null ? '' : `?page=${pageNumber}` + page
-    const apiUrl = `http://localhost:8000/student_courses/${pagination}`;
-    console.log(apiUrl)
+    const apiUrl = `${BACK_BASE_URL}student_courses/${pagination}`;
     return fetch(apiUrl).then(res => res.json())
 }
 
 
 const handleCreateStudentCourse = async (newStudentCourse) => {
     try {
-        const res = await fetch("http://localhost:8000/student_courses/", {
+        const res = await fetch(`${BACK_BASE_URL}student_courses/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
