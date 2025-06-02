@@ -2,19 +2,15 @@ import Layout from "../components/Layout.jsx";
 import {useEffect, useState} from "react";
 import Student from "../components/Student.jsx";
 import {Link} from "react-router-dom";
+import {handleFetchStudentCourses} from "../api/student-courses.jsx";
 import ReactPaginate from "react-paginate";
 
-export default function Students({ studentsPerPage }) {
+export default function Students() {
     const header = <h1>Our students!</h1>
-    const [students, setStudents] = useState([]);
-
-    useEffect(() => {
-        if ( !localStorage || !localStorage.getItem('online-courses') ) { return }
-        let db = JSON.parse(localStorage.getItem('online-courses'))
-        setStudents(db.students);
-    }, [])
-
-    const [studentOffset, setStudentOffset] = useState(0);
+    const [studentCourses, setStudentCourses] = useState([]);
+    const [pageCount, setPageCount] = useState(0);
+    const [currentPage, setCurrentPage] = useState(0);
+    const pageSize = 3;
 
     function Students ({ currStudents }) {
         return (
@@ -28,48 +24,55 @@ export default function Students({ studentsPerPage }) {
         );
     }
 
-    const endOffset = studentOffset + studentsPerPage;
-    const currStudents = students.slice(studentOffset, endOffset);
-    const pageCount = Math.ceil(students.length / studentsPerPage);
+    useEffect(() => {
+        handleFetchStudentCourses(currentPage + 1, pageSize)
+            .then(data => {
+                setStudentCourses(data.results)
+                setPageCount(Math.ceil(data.count / pageSize));
+            });
+    }, [currentPage]);
 
     const handlePageClick = (event) => {
-        const newOffset = (event.selected * studentsPerPage) % students.length;
-        setStudentOffset(newOffset);
+        setCurrentPage(event.selected);
     };
 
     return (
         <Layout header={header}>
-            {students.length > 0 ? (
-                <div className="container py-5">
-                    <div className="row g-4">
-                        <Students currStudents={currStudents} />
-                    </div>
-                    {students.length > studentsPerPage &&
-                        <div className="pagination">
-                            <ReactPaginate
-                                nextLabel="next >"
-                                onPageChange={handlePageClick}
-                                pageRangeDisplayed={3}
-                                marginPagesDisplayed={2}
-                                pageCount={pageCount}
-                                previousLabel="< previous"
-                                pageClassName="page-item"
-                                pageLinkClassName="page-link"
-                                previousClassName="page-item"
-                                previousLinkClassName="page-link"
-                                nextClassName="page-item"
-                                nextLinkClassName="page-link"
-                                breakLabel="..."
-                                breakClassName="page-item"
-                                breakLinkClassName="page-link"
-                                containerClassName="pagination"
-                                activeClassName="active"
-                                renderOnZeroPageCount={null}
-                            />
+            {studentCourses && studentCourses.length > 0 ?
+                (
+                    <div className="container py-5">
+                        <div className="row g-4">
+                            <Students currStudents={studentCourses} />
                         </div>
-                    }
-                </div>
-            ) : <h5>No students... <Link className="navbar-brand" to="/home">Become One!</Link></h5>}
+                        {pageCount > 1 &&
+                            <div className="pagination">
+                                <ReactPaginate
+                                    breakLabel="..."
+                                    onPageChange={handlePageClick}
+                                    pageRangeDisplayed={3}
+                                    marginPagesDisplayed={2}
+                                    pageCount={pageCount}
+                                    containerClassName="pagination"
+                                    activeClassName="active"
+                                    forcePage={currentPage}
+                                    nextLabel="next >"
+                                    previousLabel="< previous"
+                                    pageClassName="page-item"
+                                    pageLinkClassName="page-link"
+                                    previousClassName="page-item"
+                                    previousLinkClassName="page-link"
+                                    nextClassName="page-item"
+                                    nextLinkClassName="page-link"
+                                    breakClassName="page-item"
+                                    breakLinkClassName="page-link"
+                                    renderOnZeroPageCount={null}
+                                />
+                            </div>
+                        }
+                    </div>
+                ) :
+                <h5>No students... <Link className="navbar-brand" to="/home">Become One!</Link></h5>
+            }
         </Layout>
     )
 }

@@ -8,6 +8,7 @@ export default function Home() {
             <p className="lead">Choose from a variety of courses designed for the next generation.</p>
         </>
     )
+
     return (
         <Layout header={header}>
             <RegisterForm />

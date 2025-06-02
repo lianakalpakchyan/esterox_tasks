@@ -54,7 +54,7 @@ export const Input = ({ id, name, label, type, placeholder, autoComplete, isRequ
                         <option value="" disabled selected>-- {title} --</option>
                         {
                             options.map(option => {
-                                return <option key={option.value} value={option.value}>{option.option}</option>
+                                return <option key={option.value} value={option.option}>{option.option}</option>
                             })
                         }
                     </select>

@@ -96,6 +96,42 @@ footer {
   background: orange;
   border-color: darkorange;
 }
+.dateTime {
+  color: gray;
+  font-size: 14px;
+  text-align: right;
+  display: block;
+}
+.course-list {
+  list-style: none;
+  padding: 1rem 2rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  max-width: 700px;
+  margin: 2rem auto;
+  animation: fadeInDown 0.7s ease-in-out;
+}
+
+.course-list li {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #eee;
+  font-weight: 500;
+  font-size: 1.1rem;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+.course-list li:last-child {
+  border-bottom: none;
+}
+
+.course-list li:hover {
+  background-color: #ffefec;
+  color: #ff6f61;
+  padding-left: 1.5rem;
+  cursor: pointer;
+}
 @media (max-width: 1200px) {
   .footer-links {
     display: flex;
