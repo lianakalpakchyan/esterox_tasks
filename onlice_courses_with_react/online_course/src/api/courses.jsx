@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-import {BACK_BASE_URL} from "./envKeys.jsx";
+import {BACK_BASE_URL} from "../envKeys.jsx";
 
 const CoursesContext = createContext();
 

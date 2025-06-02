@@ -1,4 +1,4 @@
-import {BACK_BASE_URL} from "./envKeys.jsx";
+import {BACK_BASE_URL} from "../envKeys.jsx";
 
 const handleFetchStudentCourses = async (pageNumber, pageSize) => {
     const page = pageSize ? `&page_size=${pageSize}` : ''
