@@ -60,4 +60,3 @@ class StudentSerializer(serializers.ModelSerializer):
 
 
         return student
-

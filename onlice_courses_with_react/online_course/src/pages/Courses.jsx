@@ -1,5 +1,4 @@
 import Layout from "../components/Layout.jsx";
-import Placeholder from "../components/Placeholder.jsx";
 import {useContext} from "react";
 import {CoursesContext} from "../api/courses.jsx";
 
