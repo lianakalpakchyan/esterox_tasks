@@ -18,5 +18,8 @@ pip install -r requirements.txt
 # Apply database migrations
 python manage.py migrate
 
+# Run celery to send emails
+celery -A student_courses worker
+
 # Run the development server
 python manage.py runserver

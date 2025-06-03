@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from .models import Student, Course, StudentCourse
+from .tasks import send_course_register_email
 
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -54,9 +55,10 @@ class StudentSerializer(serializers.ModelSerializer):
             student.save()
 
         if not StudentCourse.objects.filter(student=student, course_id=course_id).exists():
-            StudentCourse.objects.create(student=student, course_id=course_id)
-        else:
-            raise serializers.ValidationError(f"Student: {email} is already involved in this course")
+            course = StudentCourse.objects.create(student=student, course_id=course_id)
+            send_course_register_email.delay(str(course).split(' - ')[-1], email)
 
+        else:
+            raise serializers.ValidationError(f"Student: {email} is already registered in this course")
 
         return student
