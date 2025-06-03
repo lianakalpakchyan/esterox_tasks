@@ -15,11 +15,12 @@ export default function RegisterForm() {
     const handleRegister = methods.handleSubmit(newStudent => {
         (async () => {
             try {
-                if(await handleCreateStudentCourse(newStudent)){
+                let response = await handleCreateStudentCourse(newStudent)
+                if(response === ''){
                     navigate('/students');
                 }
                 else{
-                    alert('Something went wrong!');
+                    alert(`Something went wrong! ${response}`);
                 }
             } catch (error) {
                 console.error(`Error happened while registering: ${error}`);
@@ -40,7 +41,7 @@ export default function RegisterForm() {
                                     <Input label="Email Address" type="email" id="email" name="email" placeholder="you@domain.com" autoComplete="email" isRequired={true} />
                                     <Input label="Password" type="password" id="password" name="password" placeholder="********" autoComplete="current-password" isRequired={true} />
                                     <Input label="Phone Number" type="text" id="phone" name="phone" placeholder="+37499050505" autoComplete="tel" isRequired={false} />
-                                    <Input label="course" id="course" name="course" isRequired={true} title="Select course" options={courses} />
+                                    <Input label="course" id="course_id" name="course_id" isRequired={true} title="Select course" options={courses} />
                                     <Input label="How did you hear about us?" type="text" id="referral" name="referral" placeholder="e.g. From a friend" autoComplete="on" isRequired={false} />
                                     <Input
                                         label="I agree to the <a href='documents/terms_and_conditions.pdf' download>Terms & Conditions</a>"

@@ -3,14 +3,14 @@ import {BACK_BASE_URL} from "../envKeys.jsx";
 const handleFetchStudentCourses = async (pageNumber, pageSize) => {
     const page = pageSize ? `&page_size=${pageSize}` : ''
     const pagination = pageNumber == null ? '' : `?page=${pageNumber}` + page
-    const apiUrl = `${BACK_BASE_URL}student_courses/${pagination}`;
+    const apiUrl = `${BACK_BASE_URL}students/${pagination}`;
     return fetch(apiUrl).then(res => res.json())
 }
 
 
 const handleCreateStudentCourse = async (newStudentCourse) => {
     try {
-        const res = await fetch(`${BACK_BASE_URL}student_courses/`, {
+        const res = await fetch(`${BACK_BASE_URL}students/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -25,10 +25,10 @@ const handleCreateStudentCourse = async (newStudentCourse) => {
 
         const data = await res.json();
         console.log("Student course created:", data);
-        return true;
+        return '';
     } catch (err) {
-        console.error("Error:", err.message);
-        return false;
+        console.error(err.message);
+        return err.message;
     }
 };
 

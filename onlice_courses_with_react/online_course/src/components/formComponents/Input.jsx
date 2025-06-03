@@ -47,14 +47,14 @@ export const Input = ({ id, name, label, type, placeholder, autoComplete, isRequ
                 (
                     <select
                         id={id}
-                        name={id}
+                        name={name}
                         className="form-select"
                         {...register(name, fixedValidation)}
                     >
                         <option value="" disabled selected>-- {title} --</option>
                         {
                             options.map(option => {
-                                return <option key={option.value} value={option.option}>{option.option}</option>
+                                return <option key={option.id} value={option.id}>{option.name}</option>
                             })
                         }
                     </select>
