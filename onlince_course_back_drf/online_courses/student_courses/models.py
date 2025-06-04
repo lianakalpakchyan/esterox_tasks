@@ -19,9 +19,12 @@ class Course(models.Model):
 class Student(models.Model):
     class Meta:
         db_table = 'student'
+        indexes = [
+            models.Index(fields=['email']),
+        ]
 
     full_name = models.CharField(max_length=255)
-    email = models.EmailField(max_length=255)
+    email = models.EmailField(max_length=255, unique=True)
     password = models.CharField(max_length=255, validators=[MinLengthValidator(6, message="The field must be at least 6 characters long.")])
     phone_number = models.CharField(max_length=255, null=True, blank=True)
     referral = models.CharField(max_length=500, null=True, blank=True)
