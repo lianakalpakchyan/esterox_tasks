@@ -23,3 +23,11 @@ celery -A student_courses worker
 
 # Run the development server
 python manage.py runserver
+```
+
+
+## Tests
+```
+python manage.py test student_courses.tests
+```
+
