@@ -1,6 +1,6 @@
 import Layout from "../components/Layout.jsx";
 import {useContext} from "react";
-import {CoursesContext} from "../api/courses.jsx";
+import {CoursesContext} from "../api/Courses.jsx";
 
 export default function Courses() {
     const header = <h1>Our Courses!</h1>

@@ -2,7 +2,7 @@ import Layout from "../components/Layout.jsx";
 import {useEffect, useState} from "react";
 import Student from "../components/Student.jsx";
 import {Link} from "react-router-dom";
-import {handleFetchStudentCourses} from "../api/student-courses.jsx";
+import {handleFetchStudentCourses} from "../api/StudentCourses.jsx";
 import ReactPaginate from "react-paginate";
 
 export default function Students() {

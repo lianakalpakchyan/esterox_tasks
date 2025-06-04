@@ -1,19 +1,22 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Home from './pages/Home.jsx'
-import Courses from './pages/Courses.jsx'
-import Contact from './pages/Contact.jsx'
-import PrivacyPolicy from './pages/PrivacyPolicy.jsx'
-import NoPage from './pages/NoPage.jsx'
-import About from "./pages/About.jsx";
-import Students from "./pages/Students.jsx";
-import Providers from "./components/Providers.jsx";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
+import Providers from './components/Providers.jsx';
+import Loader from "./components/Loader.jsx";
 
+// Lazy-loaded pages
+const Home = lazy(() => import('./pages/Home.jsx'));
+const About = lazy(() => import('./pages/About.jsx'));
+const Courses = lazy(() => import('./pages/Courses.jsx'));
+const Contact = lazy(() => import('./pages/Contact.jsx'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy.jsx'));
+const Students = lazy(() => import('./pages/Students.jsx'));
+const NoPage = lazy(() => import('./pages/NoPage.jsx'));
 
 function App() {
     return (
-        <>
-            <Providers>
-                <Router>
+        <Providers>
+            <Router>
+                <Suspense fallback={<Loader />}>
                     <Routes>
                         <Route index element={<Home />} />
                         <Route path="/home" element={<Home />} />
@@ -24,10 +27,10 @@ function App() {
                         <Route path="/students" element={<Students />} />
                         <Route path="*" element={<NoPage />} />
                     </Routes>
-                </Router>
-            </Providers>
-        </>
-  )
+                </Suspense>
+            </Router>
+        </Providers>
+    );
 }
 
-export default App
+export default App;

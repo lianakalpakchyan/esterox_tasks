@@ -1,4 +1,4 @@
-import {CoursesProvider} from "../api/courses.jsx";
+import {CoursesProvider} from "../api/Courses.jsx";
 
 const Providers = ({ children }) => (
         <CoursesProvider>
