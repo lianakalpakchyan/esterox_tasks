@@ -1,7 +1,12 @@
 from django.contrib.auth.hashers import make_password
-from django.core.validators import MinLengthValidator
+from django.core.validators import MinLengthValidator, RegexValidator
 from django.db import models
 from django.forms import model_to_dict
+
+PHONE_REGEX = RegexValidator(
+    regex=r'^\+?1?\d{9,15}$',
+    message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed."
+)
 
 
 class Course(models.Model):
@@ -10,7 +15,7 @@ class Course(models.Model):
 
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField()
-    duration = models.IntegerField()  # how many days
+    duration = models.PositiveIntegerField(help_text="Duration in days")
 
     def __str__(self):
         return self.name
@@ -26,7 +31,7 @@ class Student(models.Model):
     full_name = models.CharField(max_length=255)
     email = models.EmailField(max_length=255, unique=True)
     password = models.CharField(max_length=255, validators=[MinLengthValidator(6, message="The field must be at least 6 characters long.")])
-    phone_number = models.CharField(max_length=255, null=True, blank=True)
+    phone_number = models.CharField(validators=[PHONE_REGEX], max_length=17, blank=True, null=True)
     referral = models.CharField(max_length=500, null=True, blank=True)
     courses = models.ManyToManyField(Course, through="StudentCourse")
 
